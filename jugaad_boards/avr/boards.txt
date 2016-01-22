@@ -1,0 +1,63 @@
+# Boseji's Jugaad-boards Contribution Platform Configuration
+#
+# For more information see:
+# * https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5---3rd-party-Hardware-specification
+# * https://github.com/arduino/Arduino/wiki/Arduino-Hardware-Cores-migration-guide-from-1.0-to-1.6
+#
+
+menu.cpu=Processor
+
+##############################################################
+####################### Mini Boards ##########################
+##############################################################
+
+mini.name=Jugaad AVR Boards
+mini.upload.tool=avrdude
+mini.upload.mini.tocol=arduino
+mini.upload.speed=19200
+
+mini.bootloader.tool=avrdude
+mini.bootloader.unlock_bits=0x3F
+mini.bootloader.lock_bits=0x0F
+
+mini.build.mcu=mini
+mini.build.f_cpu=16000000L
+mini.build.board=JUGAAD_AVR_BOARD
+mini.build.core=arduino
+mini.build.variant=standard
+
+## Jugaad AVR board with ATmega328p 5V 16Mhz
+##------------------------------------------------------------
+
+mini.menu.cpu.m328_5V_16M=ATmega328p 5V 16Mhz
+
+mini.menu.cpu.m328_5V_16M.upload.maximum_size=30720
+mini.menu.cpu.m328_5V_16M.upload.maximum_data_size=2048
+mini.menu.cpu.m328_5V_16M.upload.speed=57600
+
+mini.menu.cpu.m328_5V_16M.bootloader.low_fuses=0xFF
+mini.menu.cpu.m328_5V_16M.bootloader.high_fuses=0xDA
+mini.menu.cpu.m328_5V_16M.bootloader.extended_fuses=0x05
+mini.menu.cpu.m328_5V_16M.bootloader.file=atmega/ATmegaBOOT_168_atmega328.hex
+
+mini.menu.cpu.m328_5V_16M.build.mcu=atmega328p
+mini.menu.cpu.m328_5V_16M.build.f_cpu=16000000L
+
+## Jugaad AVR board with ATmega328p 3.3V 8 MHz
+##------------------------------------------------------------
+mini..menu.cpu.8MHzatmega328=ATmega328p 3.3V 8 MHz
+
+mini..menu.cpu.8MHzatmega328.upload.maximum_size=30720
+mini..menu.cpu.8MHzatmega328.upload.maximum_data_size=2048
+mini..menu.cpu.8MHzatmega328.upload.speed=57600
+
+mini..menu.cpu.8MHzatmega328.bootloader.low_fuses=0xFF
+mini..menu.cpu.8MHzatmega328.bootloader.high_fuses=0xDA
+mini..menu.cpu.8MHzatmega328.bootloader.extended_fuses=0x05
+mini..menu.cpu.8MHzatmega328.bootloader.file=atmega/ATmegaBOOT_168_atmega328_mini._8MHz.hex
+
+mini..menu.cpu.8MHzatmega328.build.mcu=atmega328p
+mini..menu.cpu.8MHzatmega328.build.f_cpu=8000000L
+
+##############################################################
+

@@ -1,0 +1,37 @@
+{
+    "packages": [
+        {
+            "name": "Jugaad Boards",
+            "maintainer": "boseji",
+            "websiteURL": "http://m8051.blogspot.in/",
+            "email": "salearj@hotmail.com",
+            "help":{
+                      "online":"http://m8051.blogspot.in/"
+                    },
+
+            "platforms": [
+                {
+                    "name": "Jugaad AVR Boards",
+                    "architecture": "avr",
+                    "version": "1.0.0",
+                    "category": "All",
+                    "url":"http://github.com/boseji/jugaad_boards/raw/master/IDE_Board_Manager/avr-1.0.0.tar.bz2",
+                    "archiveFileName":"avr-1.0.0.tar.bz2",
+                    "checksum":"SHA-256:36436e39e8f52b19c1626d00c07d671bba724210e01b73f2756cb2ff02dcf782",
+                    "size":"1138406",
+                    "help":{
+                      "online":"http://m8051.blogspot.in/"
+                    },
+                    "boards":[
+                          { "name":"Mini Boards" }
+                       ],
+                    "toolsDependencies":[
+                      { "packager":"arduino", "name":"avr-gcc", "version":"4.8.1-arduino5" },
+                      { "packager":"arduino", "name":"avrdude", "version":"6.0.1-arduino5" }
+                    ]
+                }
+            ],
+            "tools":[]
+        }
+    ]
+}
