@@ -45,6 +45,7 @@ mini.menu.cpu.m328p5V16M.build.f_cpu=16000000L
 
 ## Jugaad AVR board with ATmega328p 3.3V 8 MHz
 ##------------------------------------------------------------
+
 mini..menu.cpu.m328p3V38M=ATmega328p 3.3V 8 MHz
 
 mini..menu.cpu.m328p3V38M.upload.maximum_size=30720

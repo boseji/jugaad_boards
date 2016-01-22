@@ -29,6 +29,26 @@
                       { "packager":"arduino", "name":"avr-gcc", "version":"4.8.1-arduino5" },
                       { "packager":"arduino", "name":"avrdude", "version":"6.0.1-arduino5" }
                     ]
+                },
+                {
+                    "name": "Jugaad AVR Boards",
+                    "architecture": "avr",
+                    "version": "1.0.0",
+                    "category": "All",
+                    "url":"https://github.com/boseji/jugaad_boards/raw/master/bm/jugaad_avr_boards-1.0.1.tar.bz2",
+                    "archiveFileName":"jugaad_avr_boards-1.0.1.tar.bz2",
+                    "checksum":"SHA-256:d7d3b9009a758f407c5a9365c6be1469af1e91c358440a20ca81dc07e4ca48cb",
+                    "size":"1138406",
+                    "help":{
+                      "online":"http://m8051.blogspot.in/"
+                    },
+                    "boards":[
+                          { "name":"Mini Boards" }
+                       ],
+                    "toolsDependencies":[
+                      { "packager":"arduino", "name":"avr-gcc", "version":"4.8.1-arduino5" },
+                      { "packager":"arduino", "name":"avrdude", "version":"6.0.1-arduino5" }
+                    ]
                 }
             ],
             "tools":[]
