@@ -11,7 +11,7 @@
 
             "platforms": [
                 {
-                    "name": "01 Boseji AVR Jugaad Boards",
+                    "name": "AA AVR Jugaad Boards",
                     "architecture": "avr",
                     "version": "1.0.0",
                     "category": "All",
