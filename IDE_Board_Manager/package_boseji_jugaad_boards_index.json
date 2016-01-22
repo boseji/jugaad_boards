@@ -1,7 +1,7 @@
 {
     "packages": [
         {
-            "name": "Boseji's Jugaad Boards",
+            "name": "Boseji Jugaad Boards",
             "maintainer": "boseji",
             "websiteURL": "http://m8051.blogspot.in/",
             "email": "salearj@hotmail.com",
@@ -11,7 +11,7 @@
 
             "platforms": [
                 {
-                    "name": "01 Boseji's AVR Jugaad Boards",
+                    "name": "01 Boseji AVR Jugaad Boards",
                     "architecture": "avr",
                     "version": "1.0.0",
                     "category": "All",
