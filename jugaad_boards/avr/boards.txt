@@ -11,7 +11,7 @@ menu.cpu=Processor
 ####################### Mini Boards ##########################
 ##############################################################
 
-mini.name=Jugaad AVR Boards
+mini.name=Boseji's Jugaad AVR Boards
 mini.upload.tool=avrdude
 mini.upload.mini.tocol=arduino
 mini.upload.speed=19200
@@ -29,35 +29,35 @@ mini.build.variant=standard
 ## Jugaad AVR board with ATmega328p 5V 16Mhz
 ##------------------------------------------------------------
 
-mini.menu.cpu.m328_5V_16M=ATmega328p 5V 16Mhz
+mini.menu.cpu.m328p5V16M=ATmega328p 5V 16Mhz
 
-mini.menu.cpu.m328_5V_16M.upload.maximum_size=30720
-mini.menu.cpu.m328_5V_16M.upload.maximum_data_size=2048
-mini.menu.cpu.m328_5V_16M.upload.speed=57600
+mini.menu.cpu.m328p5V16M.upload.maximum_size=30720
+mini.menu.cpu.m328p5V16M.upload.maximum_data_size=2048
+mini.menu.cpu.m328p5V16M.upload.speed=57600
 
-mini.menu.cpu.m328_5V_16M.bootloader.low_fuses=0xFF
-mini.menu.cpu.m328_5V_16M.bootloader.high_fuses=0xDA
-mini.menu.cpu.m328_5V_16M.bootloader.extended_fuses=0x05
-mini.menu.cpu.m328_5V_16M.bootloader.file=atmega/ATmegaBOOT_168_atmega328.hex
+mini.menu.cpu.m328p5V16M.bootloader.low_fuses=0xFF
+mini.menu.cpu.m328p5V16M.bootloader.high_fuses=0xDA
+mini.menu.cpu.m328p5V16M.bootloader.extended_fuses=0x05
+mini.menu.cpu.m328p5V16M.bootloader.file=atmega/ATmegaBOOT_168_atmega328.hex
 
-mini.menu.cpu.m328_5V_16M.build.mcu=atmega328p
-mini.menu.cpu.m328_5V_16M.build.f_cpu=16000000L
+mini.menu.cpu.m328p5V16M.build.mcu=atmega328p
+mini.menu.cpu.m328p5V16M.build.f_cpu=16000000L
 
 ## Jugaad AVR board with ATmega328p 3.3V 8 MHz
 ##------------------------------------------------------------
-mini..menu.cpu.8MHzatmega328=ATmega328p 3.3V 8 MHz
+mini..menu.cpu.m328p3V38M=ATmega328p 3.3V 8 MHz
 
-mini..menu.cpu.8MHzatmega328.upload.maximum_size=30720
-mini..menu.cpu.8MHzatmega328.upload.maximum_data_size=2048
-mini..menu.cpu.8MHzatmega328.upload.speed=57600
+mini..menu.cpu.m328p3V38M.upload.maximum_size=30720
+mini..menu.cpu.m328p3V38M.upload.maximum_data_size=2048
+mini..menu.cpu.m328p3V38M.upload.speed=57600
 
-mini..menu.cpu.8MHzatmega328.bootloader.low_fuses=0xFF
-mini..menu.cpu.8MHzatmega328.bootloader.high_fuses=0xDA
-mini..menu.cpu.8MHzatmega328.bootloader.extended_fuses=0x05
-mini..menu.cpu.8MHzatmega328.bootloader.file=atmega/ATmegaBOOT_168_atmega328_mini._8MHz.hex
+mini..menu.cpu.m328p3V38M.bootloader.low_fuses=0xFF
+mini..menu.cpu.m328p3V38M.bootloader.high_fuses=0xDA
+mini..menu.cpu.m328p3V38M.bootloader.extended_fuses=0x05
+mini..menu.cpu.m328p3V38M.bootloader.file=atmega/ATmegaBOOT_168_atmega328_mini._8MHz.hex
 
-mini..menu.cpu.8MHzatmega328.build.mcu=atmega328p
-mini..menu.cpu.8MHzatmega328.build.f_cpu=8000000L
+mini..menu.cpu.m328p3V38M.build.mcu=atmega328p
+mini..menu.cpu.m328p3V38M.build.f_cpu=8000000L
 
 ##############################################################
 
