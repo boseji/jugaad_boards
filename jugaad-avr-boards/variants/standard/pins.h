@@ -84,6 +84,8 @@
 #define pin2dir(p) (p<8)?&DDRD:((p<14)?&DDRB:&DDRC)
 #define pin2inp(p) (p<8)?&PIND:((p<14)?&PINB:&PINC)
 #define pin2bit(p) (p<8)?_BV(p):((p<14)?_BV(p-8):_BV(p-14))
+#define pin2int_chan(p) ((p==PD2) || (p==PD3))?(p-PD2):0xFF
+#define pin2anlog_chan(p) (p>PB5 && p<NUM_DIGITAL_PINS)?(p-A0):0xFF
 
 /*
 #define PD0    _BV(0)
