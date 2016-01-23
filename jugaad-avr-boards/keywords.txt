@@ -13,12 +13,12 @@
 digialToggle	KEYWORD2
 shiftOutIn	KEYWORD2
 analogOff	KEYWORD2
-Serial_begin	KEYWORD2
-Serial_Printi	KEYWORD2
-Serial_Printih	KEYWORD2
-Serial_Printb	KEYWORD2
-Serial_Printbh	KEYWORD2
-Serial_Print	KEYWORD2
+SerOn	KEYWORD2
+SerOuti	KEYWORD2
+SerOutih	KEYWORD2
+SerOutb	KEYWORD2
+SerOuth	KEYWORD2
+SerOut	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)

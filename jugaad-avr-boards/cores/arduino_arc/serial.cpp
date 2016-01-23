@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-uint8_t Serial;
+uint8_t Ser;
 
 #define SER_TXBYTE(X)		while ( !( UCSR0A & (1 << UDRE0) ) ) ;	\
   UDR0 = (uint8_t)(X);
@@ -125,9 +125,10 @@ uint8_t Serial;
     #error Unsupported Frequency for Baudrate
 #endif
 
-uint8_t Serial_begin(uint16_t datarate)
+uint8_t SerOn(uint16_t datarate)
 {
   UCSR0A = 0;
+  Ser = 0;
   switch(datarate)
   {
     case 2400:
@@ -166,15 +167,17 @@ uint8_t Serial_begin(uint16_t datarate)
 #else
 	UCSR0C = (1<<USBS0)|(3<<UCSZ00);
 #endif
+  Ser = 1;
+  return SUCCESS;
 }
 
-uint8_t Serial_PrintP(PGM_P buffer)
+void SerOutsP(PGM_P buffer)
 {
-  char * tmp;
-  uint8_t data;
-
-  if (buffer != 0)	// Check buffer size and data pointer
+  if (buffer != 0 && Ser == 1)	// Check buffer size and data pointer
   {
+    char * tmp;
+    uint8_t data;
+
     // Perform length computation
     tmp = (char *) buffer;
     data = (uint8_t) pgm_read_byte((uint16_t) tmp);
@@ -185,73 +188,98 @@ uint8_t Serial_PrintP(PGM_P buffer)
       ++tmp;
       data = (uint8_t) pgm_read_byte((uint16_t) tmp);
     }
-    return SUCCESS;
+  }
+}
+
+void SerOutb(uint8_t data)
+{
+  if(Ser == 1)
+  {
+    uint8_t clc, dig[3];
+    clc = data;
+    dig[2] = '0' + (clc%10);
+    clc /= 10;
+    dig[1] = '0' + (clc%10);
+    clc /= 10;
+    dig[0] = '0' + (clc%10);
+    for(clc = 0; clc < 3; clc++)
+    {
+      SER_TXBYTE(dig[clc]);
+    }
+  }    
+}
+void SerOuth(uint8_t data)
+{
+  if(Ser == 1)
+  {
+    uint8_t clc, dig[4];
+    clc = data;
+    dig[3] = clc&0x0F;
+    dig[3] += ((dig[3]) < 0x0A)?('9'+1):'A';
+    dig[3] -= 0x0A;
+    clc >>= 4;
+    dig[2] = clc&0x0F;
+    dig[2] += ((dig[2]) < 0x0A)?('9'+1):'A';
+    dig[2] -= 0x0A;
+    dig[1] = 'x';
+    dig[0] = '0';
+    for(clc = 0; clc < 4; clc++)
+    {
+      SER_TXBYTE(dig[clc]);
+    }
+  }
+}
+
+void SerOuti(uint16_t data)
+{
+  if(Ser == 1)
+  {
+    uint16_t clc;
+    uint8_t dig[5],i;
+    for(i = 0,clc = data; i < 5; i++,clc /= 10)
+    {
+      dig[4-i] = '0' + clc%10;
+    }
+    for(i = 0; i < 5; i++)
+    {  
+      SER_TXBYTE(dig[i]);
+    }
+  }
+}
+
+void SerOutih(uint16_t data)
+{
+  if(Ser == 1)
+  {  
+    uint16_t clc;
+    uint8_t dig[6],i;
+    for(i = 2,clc = data; i < 6; i++,clc >>= 4)
+    {
+      dig[5 - i + 2] = clc&0x0F;
+      dig[5 - i + 2] += ((dig[5 - i + 2]) < 0x0A)?('9'+1):'A';
+      dig[5 - i + 2] -= 0x0A;
+    }
+    dig[1] = 'x';
+    dig[0] = '0';
+    for(i=0;i<6;i++)
+    {
+      SER_TXBYTE(dig[i]);
+    }
+  }
+}
+
+uint8_t SerOff()
+{
+  if(Ser == 1)
+  {
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+    {
+      UCSR0B = 0;
+      UCSR0A = 0;
+      UCSR0C = 0;
+      Ser = 0;
+    }
   }
   return GENERAL_ERROR;
-}
-
-void Serial_Printb(uint8_t data)
-{
-  uint8_t clc, dig[3];
-  clc = data;
-  dig[2] = '0' + (clc%10);
-  clc /= 10;
-  dig[1] = '0' + (clc%10);
-  clc /= 10;
-  dig[0] = '0' + (clc%10);
-  for(clc = 0; clc < 3; clc++)
-  {
-    SER_TXBYTE(dig[clc]);
-  }
-}
-void Serial_Printbh(uint8_t data)
-{
-  uint8_t clc, dig[4];
-  clc = data;
-  dig[3] = clc&0x0F;
-  dig[3] += ((dig[3]) < 0x0A)?('9'+1):'A';
-  dig[3] -= 0x0A;
-  clc >>= 4;
-  dig[2] = clc&0x0F;
-  dig[2] += ((dig[2]) < 0x0A)?('9'+1):'A';
-  dig[2] -= 0x0A;
-  dig[1] = 'x';
-  dig[0] = '0';
-  for(clc = 0; clc < 4; clc++)
-  {
-    SER_TXBYTE(dig[clc]);
-  }
-}
-
-void Serial_Printi(uint16_t data)
-{
-  uint16_t clc;
-  uint8_t dig[5],i;
-  for(i = 0,clc = data; i < 5; i++,clc /= 10)
-  {
-    dig[4-i] = '0' + clc%10;
-  }
-  for(i = 0; i < 5; i++)
-  {  
-    SER_TXBYTE(dig[i]);
-  }
-}
-
-void Serial_Printih(uint16_t data)
-{
-  uint16_t clc;
-  uint8_t dig[6],i;
-  for(i = 2,clc = data; i < 6; i++,clc >>= 4)
-  {
-    dig[5 - i + 2] = clc&0x0F;
-    dig[5 - i + 2] += ((dig[5 - i + 2]) < 0x0A)?('9'+1):'A';
-    dig[5 - i + 2] -= 0x0A;
-  }
-  dig[1] = 'x';
-  dig[0] = '0';
-  for(i=0;i<6;i++)
-  {
-    SER_TXBYTE(dig[i]);
-  }
 }
 

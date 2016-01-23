@@ -22,11 +22,8 @@ uint16_t analogRead(uint8_t apin)
 	uint8_t high = 0, low = 0;
 	/* Enable the ADC */
 #if defined(ADCSRA)
-	if(!( ADCSRA & _BV(ADEN) ))
-	{
-		ADCSRA = _BV(ADEN);
-		_delay_ms(10);
-	}
+	// Enable ADC with Slow conversion rate of F_CPU/16
+	ADCSRA = 0b10000100;
 #endif
 
 #if defined(ADCSRB) && defined(MUX5)
@@ -39,8 +36,7 @@ uint16_t analogRead(uint8_t apin)
 	// channel (low 4 bits).  this also sets ADLAR (left-adjust result)
 	// to 0 (the default).
 #ifdef ADMUX
-	//ADMUX = (g_analog_reference<<REFS0) | (pin2anlog_chan(apin) & 0x0F);
-	ADMUX = (0<<6) | (pin2anlog_chan(apin) & 0x0F);
+	ADMUX = (g_analog_reference<<REFS0) | (pin2anlog_chan(apin) & 0x0F);
 #endif
 
 #if defined(ADCSRA) && defined(ADCL)
@@ -48,12 +44,10 @@ uint16_t analogRead(uint8_t apin)
 	ADCSRA |= _BV(ADSC);
 
 	// ADSC is cleared when the conversion finishes
-	while (ADCSRA & _BV(ADSC));
-
-	// we have to read ADCL first; doing so locks both ADCL
-	// and ADCH until ADCH is read.  reading ADCL second would
-	// cause the results of each conversion to be discarded,
-	// as ADCL and ADCH would be locked when it completed.
+	while((ADCSRA & _BV(ADIF)) != _BV(ADIF));	// Wait till conversion is complete
+	// Clear the Flag
+	ADCSRA  |= (1 << ADIF);	
+	// Read Values
 	low  = ADCL;
 	high = ADCH;
 #else
