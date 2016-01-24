@@ -1,21 +1,27 @@
 #include <Arduino.h>
+#include "cq.h"
 
-uint8_t Ser;
+#define SER_ISR_MASK 0b00010000
+#define SER_EN_MASK 0b00000001
+#define SER_UNSUPPORTED 0b01010101
 
-#define SER_TXBYTE(X)		while ( !( UCSR0A & (1 << UDRE0) ) ) ;	\
+static uint8_t g_Ser_En = 0;
+static uint8_t g_Ser_Rx_Buffer[SER_RX_BUFFER_MAX];
+volatile cqueue_t g_Ser_Rx_Queue;
+volatile uint16_t g_Ser_Rx_Ctr;
+
+#define SER_TXBYTE(X)   while ( !( UCSR0A & (1 << UDRE0) ) ) ;  \
   UDR0 = (uint8_t)(X);
-#define SER_RXBYTE(X)		while ( !(UCSR0A & (1<<RXC0)) ) ; \
+#define SER_RXBYTE(X)   while ( !(UCSR0A & (1<<RXC0)) ) ; \
   X = UDR0;
-#define SER_RXBYTE_T(X,TM)	TM = SER_RX_TIMEOUT; \
+#define SER_RXBYTE_T(X,TM)  TM = SER_RX_TIMEOUT; \
   while ( ( !(UCSR0A & (1<<RXC0)) ) && ((TM) > 0) ) \
   { \
     _delay_us(100); \
     --TM; \
   } \
   X = UDR0;
-#define SER_CLR_STATUS()	UCSR0A = 0;
-#define SER_CONFIG()		UCSR0B = ( 1 << TXEN0 ) | ( 1 << RXEN0 ); \
-  UCSR0C = ( 1 << UCSZ01 ) | ( 1 << UCSZ00 );
+#define SER_CLR_STATUS()  UCSR0A |= _BV(TXC0)
 
 #if F_CPU == 16000000L
 #define SER_BAUD_2400 \
@@ -127,8 +133,10 @@ uint8_t Ser;
 
 uint8_t SerOn(uint16_t datarate)
 {
+  if(g_Ser_En != 0)
+    return GENERAL_ERROR;
   UCSR0A = 0;
-  Ser = 0;
+  g_Ser_En = 0;
   switch(datarate)
   {
     case 2400:
@@ -158,22 +166,65 @@ uint8_t SerOn(uint16_t datarate)
     default:
       return PARAMETER_ERROR;
   }
-
-	/* Enable receiver and transmitter */
-	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
+  
 #if defined(__AVR_ATmega8__)
-	/* Set frame format: 8 data, 2 stop bit */
-	UCSR0C = (1<<URSEL)|(1<<USBS0)|(3<<UCSZ00);
+  /* Set frame format: 8 data, 2 stop bit */
+  UCSR0C = _BV(URSEL)|_BV(USBS0)|(3<<UCSZ00);
 #else
-	UCSR0C = (1<<USBS0)|(3<<UCSZ00);
+  UCSR0C = _BV(USBS0)|(3<<UCSZ00);
 #endif
-  Ser = 1;
+  g_Ser_Rx_Ctr = 0; // Initialize the RX Byte Counter
+  /* Enable receiver and transmitter */
+  if(cqueue_init((cqueue_t *)&g_Ser_Rx_Queue, g_Ser_Rx_Buffer, SER_RX_BUFFER_MAX) == CQ_STATUS_SUCCESS)
+  {
+    UCSR0B = _BV(RXEN0)|_BV(TXEN0)|_BV(RXCIE0);  
+    g_Ser_En = SER_EN_MASK|SER_ISR_MASK; /* Serial Enabled */
+  }
+  else /* In case we fail to make the Buffer Available */
+  {
+    UCSR0B = _BV(RXEN0)|_BV(TXEN0);  
+    g_Ser_En = SER_EN_MASK; /* Serial Enabled */
+  }
   return SUCCESS;
 }
 
-void SerOutsP(PGM_P buffer)
+uint8_t SerOnEx(uint16_t datarate, uint8_t datarate2x, uint8_t config)
 {
-  if (buffer != 0 && Ser == 1)	// Check buffer size and data pointer
+  if(g_Ser_En != 0)
+    return GENERAL_ERROR;
+  /* Set 2X Multiplier */
+  if(datarate2x)
+    UCSR0A = _BV(U2X0);
+  else
+    UCSR0A = 0;
+  /* Set Data Rate */
+  UBRR0H = datarate >> 8;
+  UBRR0L = datarate & 0xFF;
+  /* Set Configuration */
+  UCSR0C = config;
+  g_Ser_Rx_Ctr = 0; // Initialize the RX Byte Counter
+  /* Enable receiver and transmitter */
+  if(cqueue_init((cqueue_t *)&g_Ser_Rx_Queue, g_Ser_Rx_Buffer, SER_RX_BUFFER_MAX) == CQ_STATUS_SUCCESS)
+  {
+    UCSR0B = _BV(RXEN0)|_BV(TXEN0)|_BV(RXCIE0);  
+    g_Ser_En = SER_EN_MASK|SER_ISR_MASK; /* Serial Enabled */
+  }
+  else /* In case we fail to make the Buffer Available */
+  {
+    UCSR0B = _BV(RXEN0)|_BV(TXEN0);  
+    g_Ser_En = SER_EN_MASK; /* Serial Enabled */
+  }
+  return SUCCESS;
+}
+
+uint8_t SerIsReady(void)
+{
+  return g_Ser_En;
+}
+
+void SerPutsPd(PGM_P buffer)
+{
+  if (buffer != 0 && g_Ser_En != 0)  // Check buffer size and data pointer
   {
     char * tmp;
     uint8_t data;
@@ -193,7 +244,7 @@ void SerOutsP(PGM_P buffer)
 
 void SerOutb(uint8_t data)
 {
-  if(Ser == 1)
+  if(g_Ser_En != 0)
   {
     uint8_t clc, dig[3];
     clc = data;
@@ -210,7 +261,7 @@ void SerOutb(uint8_t data)
 }
 void SerOuth(uint8_t data)
 {
-  if(Ser == 1)
+  if(g_Ser_En != 0)
   {
     uint8_t clc, dig[4];
     clc = data;
@@ -232,7 +283,7 @@ void SerOuth(uint8_t data)
 
 void SerOuti(uint16_t data)
 {
-  if(Ser == 1)
+  if(g_Ser_En != 0)
   {
     uint16_t clc;
     uint8_t dig[5],i;
@@ -249,7 +300,7 @@ void SerOuti(uint16_t data)
 
 void SerOutih(uint16_t data)
 {
-  if(Ser == 1)
+  if(g_Ser_En != 0)
   {  
     uint16_t clc;
     uint8_t dig[6],i;
@@ -268,18 +319,194 @@ void SerOutih(uint16_t data)
   }
 }
 
+uint16_t SerIsAvaialble(void)
+{
+  if(g_Ser_En != 0)
+  {
+    return g_Ser_Rx_Ctr;
+  }
+  return 0;
+}
+
+uint8_t SerRead(void)
+{
+  if(g_Ser_En != 0)
+  {
+    uint8_t data,i;
+    /* Only work if there are few bytes available */
+    while(g_Ser_Rx_Ctr > 0)
+    {
+      /* Try to Read the Queue */
+      ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+      {
+        i = cqueue_pop((cqueue_t *)&g_Ser_Rx_Queue, &data);
+      }
+      /* Check if Reading was successful */
+      if( i == CQ_STATUS_SUCCESS)
+      {
+        /* Decrement the Counter we have Read one Byte */
+        ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+        {
+          --g_Ser_Rx_Ctr;
+        }
+        /* 1 Byte was ready so now Return the data */
+        return data;
+      }
+      _delay_us(10); // Backing off while in Receive
+    }// while(SerIsAvaialble())
+  }
+  return 0;
+}
+
+void SerReadBytes(uint8_t *buffer,uint16_t size)
+{
+  if(g_Ser_En != 0 && buffer != 0 && size != 0)
+  {
+    uint16_t i;
+    uint8_t c;
+    i = 0;
+    /* Loop Till Filling Up of Buffer */
+    while(i<size)
+    {
+      /* Call Receive only if Data is available */
+      if(g_Ser_Rx_Ctr > 0)
+      {
+        c = SerRead(); // Read the byte
+        buffer[i] = c; // Write to Buffer
+        ++i; // Increment the Counter
+      }
+      _delay_us(10); // Backing off while in Receive
+    }
+  }
+}
+
+uint16_t SerReadBytesEx(uint8_t *buffer,uint16_t size, uint16_t timeoutms)
+{
+  if(g_Ser_En != 0 && buffer != 0 && size != 0)
+  {
+    uint16_t i, t;
+    uint8_t c;
+    i = 0;
+    /* Loop Till Filling Up of Buffer */
+    while(i<size)
+    {
+      _delay_ms(1); // Backing off while in Receive
+      /* Call Receive only if Data is available */
+      if(g_Ser_Rx_Ctr > 0)
+      {
+        c = SerRead(); // Read the byte
+        buffer[i] = c; // Write to Buffer
+        ++i; // Increment the Counter
+        t = 0; // Reset Timeout 
+      }
+      else /* Increment Timeout */
+      {
+        if(++t>=timeoutms)
+          break;
+      }      
+    }
+    return i;
+  }
+  return 0;
+}
+
+uint16_t SerReadBytesUtil(uint8_t termination, uint8_t *buffer,uint16_t size)
+{
+  if(g_Ser_En != 0 && buffer != 0 && size != 0)
+  {
+    uint16_t i;
+    uint8_t c;
+    i = 0;
+    /* Loop Till Filling Up of Buffer */
+    while(i<size)
+    {
+      /* Call Receive only if Data is available */
+      if(g_Ser_Rx_Ctr > 0)
+      {
+        c = SerRead(); // Read the byte
+        if(c == termination) // Check for Termination Character
+          break;
+        buffer[i] = c; // Write to Buffer
+        ++i; // Increment the Counter
+      }
+      _delay_us(10); // Backing off while in Receive
+    }
+    return i;
+  }
+  return 0;
+}
+
+uint16_t SerReadBytesUtilEx(uint8_t termination, uint8_t *buffer,uint16_t size, uint16_t timeoutms)
+{
+  if(g_Ser_En != 0 && buffer != 0 && size != 0)
+  {
+    uint16_t i, t;
+    uint8_t c;
+    i = 0;
+    /* Loop Till Filling Up of Buffer */
+    while(i<size)
+    {
+      _delay_ms(1); // Backing off while in Receive
+      /* Call Receive only if Data is available */
+      if(g_Ser_Rx_Ctr > 0)
+      {
+        c = SerRead(); // Read the byte
+        if(c == termination) // Check for Termination Character
+          break;
+        buffer[i] = c; // Write to Buffer
+        ++i; // Increment the Counter
+        t = 0; // Reset Timeout 
+      }
+      else /* Increment Timeout */
+      {
+        if(++t>=timeoutms)
+          break;
+      }      
+    }
+    return i;
+  }
+  return 0;
+}
+
 uint8_t SerOff()
 {
-  if(Ser == 1)
+  if(g_Ser_En != 0)
   {
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
     {
       UCSR0B = 0;
       UCSR0A = 0;
       UCSR0C = 0;
-      Ser = 0;
+      g_Ser_En = 0;
     }
   }
   return GENERAL_ERROR;
 }
 
+#if defined(USART_RX_vect)
+  ISR(USART_RX_vect)
+#elif defined(USART0_RX_vect)
+  ISR(USART0_RX_vect)
+#elif defined(USART_RXC_vect)
+  ISR(USART_RXC_vect) // ATmega8
+#else
+  #error "Don't know what the Data Received vector is called for Serial"
+#endif
+{
+  if ( ((UCSR0A & (_BV(UPE0)|_BV(FE0)|_BV(DOR0))) == 0) && /* Successful Reception */
+      (g_Ser_En & (SER_EN_MASK|SER_ISR_MASK)) )
+  {
+    uint8_t c;
+    c = UDR0; // Read the Byte Received
+    if(g_Ser_Rx_Ctr<SER_RX_BUFFER_MAX)
+    {
+      // Put Data to Queue
+      if(cqueue_push((cqueue_t *)&g_Ser_Rx_Queue,c) == CQ_STATUS_SUCCESS)
+        g_Ser_Rx_Ctr++;
+    }
+  }
+  else
+  {
+    UDR0; // read byte but discard it for Error
+  }
+}

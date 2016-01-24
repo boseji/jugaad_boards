@@ -59,14 +59,27 @@ void analogOff();
 //uint16_t analogSample(uint16_t *buffer, uint8_t buf_len, uint8_t Cycles);
 //uin8_t analogComp(uint8_t pin, uint16_t delay);
 
-extern uint8_t Ser;
+#define SER_RX_BUFFER_MAX 64
 uint8_t SerOn(uint16_t datarate);
+uint8_t SerOnEx(uint16_t datarate, uint8_t datarate2x, uint8_t config);
+uint8_t SerIsReady(void);
 void SerOuti(uint16_t data);
 void SerOutih(uint16_t data);
 void SerOutb(uint8_t data);
 void SerOuth(uint8_t data);
-void SerOutsP(PGM_P buffer);
-#define SerOut(st) SerOutsP(PSTR(st))
+
+void SerPutc(uint8_t data);
+void SerPuts(uint8_t * data);
+void SerPutsz(uint8_t * data, uint8_t begin, uint8_t size);
+void SerPutsPd(PGM_P buffer);
+
+uint16_t SerIsAvaialble(void);
+uint8_t SerRead(void);
+void SerReadBytes(uint8_t *buffer,uint16_t size);
+uint16_t SerReadBytesEx(uint8_t *buffer,uint16_t size, uint16_t timeoutms);
+uint16_t SerReadBytesUtil(uint8_t termination, uint8_t *buffer,uint16_t size);
+uint16_t SerReadBytesUtilEx(uint8_t termination, uint8_t *buffer,uint16_t size, uint16_t timeoutms);
+#define SerOut(st) SerPutsPd(PSTR(st))
 uint8_t SerOff();
 
 extern void setup();
