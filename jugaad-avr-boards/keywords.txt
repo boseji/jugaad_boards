@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For Jugaad AVR
+# Syntax Coloring Map For Jugaad AVR Boards
 #######################################
 
 #######################################
@@ -14,11 +14,24 @@ digialToggle	KEYWORD2
 shiftOutIn	KEYWORD2
 analogOff	KEYWORD2
 SerOn	KEYWORD2
+SerOnEx	KEYWORD2
+SerIsReady	KEYWORD2
 SerOuti	KEYWORD2
 SerOutih	KEYWORD2
 SerOutb	KEYWORD2
-SerOuth	KEYWORD2
+SerOutbh	KEYWORD2
+SerPutc	KEYWORD2
+SerPuts	KEYWORD2
+SerPutsz	KEYWORD2
+SerPutsPd	KEYWORD2
 SerOut	KEYWORD2
+SerIsAvaialble	KEYWORD2
+SerRead	KEYWORD2
+SerReadBytes	KEYWORD2
+SerReadBytesEx	KEYWORD2
+SerReadBytesUtil	KEYWORD2
+SerReadBytesUtilEx	KEYWORD2
+
 
 #######################################
 # Instances (KEYWORD2)
@@ -28,4 +41,8 @@ SerOut	KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################
+PARAMETER_ERROR	LITERAL1
+GENERAL_ERROR	LITERAL1
+UNSUPPORTED_ERROR	LITERAL1
+SUCCESS	LITERAL1
 

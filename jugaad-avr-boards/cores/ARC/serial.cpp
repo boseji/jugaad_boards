@@ -222,6 +222,49 @@ uint8_t SerIsReady(void)
   return g_Ser_En;
 }
 
+void SerPutc(uint8_t data)
+{
+  if(g_Ser_En != 0)
+  {
+    SER_TXBYTE(data);
+  }
+}
+
+void SerPuts(const char * data)
+{
+  if (data != 0 && g_Ser_En != 0)  // Check buffer size and data pointer
+  {
+    char * tmp;
+    // Perform length computation
+    tmp = (char *) data;    
+    SER_CLR_STATUS();// Clear the Interrupt Status
+    while (*tmp != '\0')// Iterate till the null is found
+    {
+      SER_TXBYTE(((uint8_t)*tmp));
+      ++tmp;
+    }
+  }
+}
+
+void SerPutsz(const char * data, uint16_t begin, uint16_t size)
+{
+  if ((data != 0) && (g_Ser_En != 0) && 
+    (begin < size) && (size != 0))  // Check buffer size and data pointer
+  {
+    char * tmp;
+    uint16_t i = 0;
+    // Perform length computation
+    tmp = (char *) (data + begin);    
+    SER_CLR_STATUS();// Clear the Interrupt Status
+    while (i < size)// Iterate till the null is found
+    {
+      SER_TXBYTE(((uint8_t)*tmp));
+      ++tmp;
+      ++i;
+    }
+  }
+}
+
 void SerPutsPd(PGM_P buffer)
 {
   if (buffer != 0 && g_Ser_En != 0)  // Check buffer size and data pointer
@@ -259,7 +302,7 @@ void SerOutb(uint8_t data)
     }
   }    
 }
-void SerOuth(uint8_t data)
+void SerOutbh(uint8_t data)
 {
   if(g_Ser_En != 0)
   {

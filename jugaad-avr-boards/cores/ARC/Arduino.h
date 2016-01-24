@@ -9,6 +9,11 @@
 #include <util/atomic.h>
 #include <util/delay.h>
 
+/**
+ * Only Works if ARC Compilation is used
+ */
+#ifdef ARC_COMPILE
+
 /* GPIO Mode Settings */
 #define OUTPUT 1
 #define INPUT 2
@@ -66,24 +71,24 @@ uint8_t SerIsReady(void);
 void SerOuti(uint16_t data);
 void SerOutih(uint16_t data);
 void SerOutb(uint8_t data);
-void SerOuth(uint8_t data);
-
+void SerOutbh(uint8_t data);
 void SerPutc(uint8_t data);
-void SerPuts(uint8_t * data);
-void SerPutsz(uint8_t * data, uint8_t begin, uint8_t size);
+void SerPuts(const char * data);
+void SerPutsz(const char * data, uint16_t begin, uint16_t size);
 void SerPutsPd(PGM_P buffer);
-
+#define SerOut(st) SerPutsPd(PSTR(st))
 uint16_t SerIsAvaialble(void);
 uint8_t SerRead(void);
 void SerReadBytes(uint8_t *buffer,uint16_t size);
 uint16_t SerReadBytesEx(uint8_t *buffer,uint16_t size, uint16_t timeoutms);
 uint16_t SerReadBytesUtil(uint8_t termination, uint8_t *buffer,uint16_t size);
 uint16_t SerReadBytesUtilEx(uint8_t termination, uint8_t *buffer,uint16_t size, uint16_t timeoutms);
-#define SerOut(st) SerPutsPd(PSTR(st))
 uint8_t SerOff();
 
 extern void setup();
 
 extern void loop();
+
+#endif /* ARC_COMPILE */
 
 #endif /* _ARDUINO_H_ */

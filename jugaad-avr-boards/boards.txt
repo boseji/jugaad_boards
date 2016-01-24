@@ -21,7 +21,7 @@ miniboard.bootloader.unlock_bits=0x3F
 miniboard.bootloader.lock_bits=0x0F
 
 miniboard.build.board=JUGAAD_AVR_BOARD
-miniboard.build.core=arduino_arc
+miniboard.build.core=ARC
 miniboard.build.variant=standard
 
 ## Arduino Pro or Pro Mini 16 MHz w/ ATmega328P DIP
