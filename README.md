@@ -13,7 +13,10 @@ In order to be able to to care to these main 2 requirements the design was made 
 
 Download the Repository from the [Link](https://github.com/boseji/jugaad_boards/archive/master.zip)
 
-Then Extract it `as-Is` under `<Arduino IDE Dir>\hardware` such that the folder new structure looks like
+Then Extract it `as-Is` under `<Arduino IDE Dir>\hardware` such that the 
+
+folder new structure looks like
+
 `<Arduino IDE Dir>\hardware\juggad_boards-master\jugaad-avr-boards`
 
 Here `<Arduino IDE Dir>` is the location of the installation / Extraction of the Arduino IDE.
