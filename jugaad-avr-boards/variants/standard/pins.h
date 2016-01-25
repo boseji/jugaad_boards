@@ -78,12 +78,15 @@
 #define MISO    12
 #define SCK    13
 
+#define SDA 18
+#define SCL 19
+
 #define LED_BUILTIN    13
 
-#define pin2out(p) (p<8)?&PORTD:((p<14)?&PORTB:&PORTC)
-#define pin2dir(p) (p<8)?&DDRD:((p<14)?&DDRB:&DDRC)
-#define pin2inp(p) (p<8)?&PIND:((p<14)?&PINB:&PINC)
-#define pin2bit(p) (p<8)?_BV(p):((p<14)?_BV(p-8):_BV(p-14))
+#define pin2out(p) (p<PB0)?&PORTD:((p<PC0)?&PORTB:&PORTC)
+#define pin2dir(p) (p<PB0)?&DDRD:((p<PC0)?&DDRB:&DDRC)
+#define pin2inp(p) (p<PB0)?&PIND:((p<PC0)?&PINB:&PINC)
+#define pin2bit(p) (p<PB0)?_BV(p):((p<PC0)?_BV(p-PB0):_BV(p-PC0))
 #define pin2int_chan(p) ((p==PD2) || (p==PD3))?(p-PD2):0xFF
 #define pin2anlog_chan(p) (p>PB5 && p<NUM_DIGITAL_PINS)?(p-A0):0xFF
 
