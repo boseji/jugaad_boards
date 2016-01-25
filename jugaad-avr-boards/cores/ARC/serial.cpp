@@ -403,7 +403,7 @@ uint8_t SerRead(void)
 
 void SerReadBytes(uint8_t *buffer,uint16_t size)
 {
-  if(g_Ser_En != 0 && buffer != 0 && size != 0)
+  if(g_Ser_En != 0 && buffer != 0 && size != 0 && (size < SER_RX_BUFFER_MAX))
   {
     uint16_t i;
     uint8_t c;
@@ -425,7 +425,7 @@ void SerReadBytes(uint8_t *buffer,uint16_t size)
 
 uint16_t SerReadBytesEx(uint8_t *buffer,uint16_t size, uint16_t timeoutms)
 {
-  if(g_Ser_En != 0 && buffer != 0 && size != 0)
+  if(g_Ser_En != 0 && buffer != 0 && size != 0 && (size < SER_RX_BUFFER_MAX))
   {
     uint16_t i, t;
     uint8_t c;
@@ -455,7 +455,7 @@ uint16_t SerReadBytesEx(uint8_t *buffer,uint16_t size, uint16_t timeoutms)
 
 uint16_t SerReadBytesUtil(uint8_t termination, uint8_t *buffer,uint16_t size)
 {
-  if(g_Ser_En != 0 && buffer != 0 && size != 0)
+  if(g_Ser_En != 0 && buffer != 0 && size != 0 && (size < SER_RX_BUFFER_MAX))
   {
     uint16_t i;
     uint8_t c;
@@ -481,7 +481,7 @@ uint16_t SerReadBytesUtil(uint8_t termination, uint8_t *buffer,uint16_t size)
 
 uint16_t SerReadBytesUtilEx(uint8_t termination, uint8_t *buffer,uint16_t size, uint16_t timeoutms)
 {
-  if(g_Ser_En != 0 && buffer != 0 && size != 0)
+  if(g_Ser_En != 0 && buffer != 0 && size != 0 && (size < SER_RX_BUFFER_MAX))
   {
     uint16_t i, t;
     uint8_t c;
