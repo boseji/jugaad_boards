@@ -1,5 +1,29 @@
 #######################################
-# Syntax Coloring Map For Jugaad AVR
+# Syntax Coloring Map For Jugaad AVR Boards
+#######################################
+#
+# Author: Abhijit Bose (salearj@hotmail.com)
+#
+# Copyright (c) 2016 Abhijit Bose.  All right reserved.
+#
+# This file is part of Jugaad Boards Framework (JBF) for A.R.C. Core.
+#
+# JBF is free software: you can redistribute it and / or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+#   JBF is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with JBF.
+# If not, see <https://www.gnu.org/licenses/lgpl-3.0.txt>.
+# You can also write to the Free Software Foundation, Inc.,
+# 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#
 #######################################
 
 #######################################
@@ -10,14 +34,70 @@
 # Methods and Functions (KEYWORD2)
 #######################################
 
-digialToggle	KEYWORD2
-
-#######################################
-# Instances (KEYWORD2)
-#######################################
-
+digitalToggle	KEYWORD2
+shiftOutIn	KEYWORD2
+analogOff	KEYWORD2
+SerOn	KEYWORD2
+SerOnEx	KEYWORD2
+SerIsReady	KEYWORD2
+SerOuti	KEYWORD2
+SerOutih	KEYWORD2
+SerOutb	KEYWORD2
+SerOutbh	KEYWORD2
+SerPutc	KEYWORD2
+SerPuts	KEYWORD2
+SerPutsz	KEYWORD2
+SerPutsPd	KEYWORD2
+SerOut	KEYWORD2
+SerIsAvaialble	KEYWORD2
+SerRead	KEYWORD2
+SerReadBytes	KEYWORD2
+SerReadBytesEx	KEYWORD2
+SerReadBytesUtil	KEYWORD2
+SerReadBytesUtilEx	KEYWORD2
+SpimOn	KEYWORD2
+SpimSend	KEYWORD2
+SpimSends	KEYWORD2
+SpimReads	KEYWORD2
+SpimTrans	KEYWORD2
+SpimOff	KEYWORD2
+TwimOn	KEYWORD2
+TwimWriteEx	KEYWORD2
+TwimReadEx	KEYWORD2
+TwimWrite	KEYWORD2
+TwimRead	KEYWORD2
+TwimOff	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
 #######################################
-
+PARAMETER_ERROR	LITERAL1
+GENERAL_ERROR	LITERAL1
+UNSUPPORTED_ERROR	LITERAL1
+SUCCESS	LITERAL1
+SPIM_MODE_0	LITERAL1
+SPIM_MODE_1	LITERAL1
+SPIM_MODE_2	LITERAL1
+SPIM_MODE_3	LITERAL1
+SPIM_MODE_STANDARD	LITERAL1
+SPIM_MODE_DEFAULT	LITERAL1
+SPIM_SPEED_DIV2	LITERAL1
+SPIM_SPEED_DIV4	LITERAL1
+SPIM_SPEED_DIV8	LITERAL1
+SPIM_SPEED_DIV16	LITERAL1
+SPIM_SPEED_DIV32	LITERAL1
+SPIM_SPEED_DIV64	LITERAL1
+SPIM_SPEED_DIV128	LITERAL1
+SPIM_SPEED_DEFAULT	LITERAL1
+TWIM_BITRATE_10K	LITERAL1
+TWIM_BITRATE_100K	LITERAL1
+TWIM_BITRATE_400K	LITERAL1
+TWIM_BITRATE_DEFAULT	LITERAL1
+TWIM_READ	LITERAL1
+TWIM_WRITE	LITERAL1
+TWIM_STATUS_SUCCESS	LITERAL1
+TWIM_STATUS_START_FAILED	LITERAL1
+TWIM_STATUS_ADDRESS_FAILED	LITERAL1
+TWIM_STATUS_DATASEND_FAILED	LITERAL1
+TWIM_STATUS_DATAREAD_ACK_FAILED	LITERAL1
+TWIM_STATUS_DATAREAD_NACK_FAILED	LITERAL1

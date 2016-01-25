@@ -1,16 +1,39 @@
 # Boseji's Jugaad-boards Contribution Platform Configuration
 #
 # For more information see:
-# * https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5---3rd-party-Hardware-specification
-# * https://github.com/arduino/Arduino/wiki/Arduino-Hardware-Cores-migration-guide-from-1.0-to-1.6
+# https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5---3rd-party-Hardware-specification
+# https://github.com/arduino/Arduino/wiki/Arduino-Hardware-Cores-migration-guide-from-1.0-to-1.6
 #
+# Author: Abhijit Bose (salearj@hotmail.com)
+#
+# Copyright (c) 2016 Abhijit Bose.  All right reserved.
+#
+# This file is part of Jugaad Boards Framework (JBF) for A.R.C. Core.
+#
+# JBF is free software: you can redistribute it and / or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+#   JBF is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with JBF.
+# If not, see <https://www.gnu.org/licenses/lgpl-3.0.txt>.
+# You can also write to the Free Software Foundation, Inc.,
+# 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#
+
 name=Boseji's Jugaad AVR Boards
 version=1.0.0
 
 
 
 # AVR compile variables
-# --------------------- 
+# ---------------------
 
 compiler.warning_flags=-w
 compiler.warning_flags.none=-w
@@ -42,6 +65,9 @@ compiler.elf2hex.cmd=avr-objcopy
 compiler.ldflags=
 compiler.size.cmd=avr-size
 
+# Defines ARC Architecture Specific Defiles
+compiler.boardflags=-DARC_COMPILE -DJUGAAD_BOARDS -DJUGAAD_AVR_BOARDS
+
 # This can be overriden in boards.txt
 build.extra_flags=
 
@@ -60,13 +86,13 @@ compiler.elf2hex.extra_flags=
 # --------------------
 
 ## Compile c files
-recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} {compiler.c.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARC_{build.board} -DARC_{build.arch} {compiler.boardflags} {compiler.c.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
 
 ## Compile c++ files
-recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} {compiler.cpp.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARC_{build.board} -DARC_{build.arch} {compiler.boardflags} {compiler.cpp.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
 
 ## Compile S files
-recipe.S.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.S.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} {compiler.S.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+recipe.S.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.S.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARC_{build.board} -DARC_{build.arch} {compiler.boardflags} {compiler.S.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
 
 ## Create archives
 recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} {compiler.ar.extra_flags} "{archive_file_path}" "{object_file}"

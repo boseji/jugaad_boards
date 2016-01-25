@@ -1,3 +1,42 @@
+/**
+ * @file pins.h
+ *
+ * @brief Pin definition file for Standard variant of A.R.C Core
+ *   This details the pin configuration for ATmega328P/ATmega168P/ATmega8
+ *   in DIP packages
+ *
+ *
+ * @version 1.0.0 First Version Release - 25th Jan 2016
+ *
+ * @author Abhijit Bose (salearj@hotmail.com)
+ *
+ * @copy Copyright (c) 2016 Abhijit Bose.  All right reserved.
+ *
+ * @license
+ * This file is part of Jugaad Boards Framework (JBF) for A.R.C. Core.
+ *
+ * JBF is free software: you can redistribute it and / or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ *   JBF is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with JBF.
+ * If not, see <https://www.gnu.org/licenses/lgpl-3.0.txt>.
+ * You can also write to the Free Software Foundation, Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * @note Arduino - Copyright owned by Arduino LLC and we are not associated
+ *  with them in any what so ever manner. JBF is an independently developed entity
+ *  and hence Arduino LLC or Associated collaborators cannot claim ownership
+ *  of this work under any legal on permissible context.
+ *
+ */
 #ifndef _PINS_H_
 #define _PINS_H_
 
@@ -78,12 +117,17 @@
 #define MISO    12
 #define SCK    13
 
+#define SDA 18
+#define SCL 19
+
 #define LED_BUILTIN    13
 
-#define pin2out(p) (p<8)?&PORTD:((p<14)?&PORTB:&PORTC)
-#define pin2dir(p) (p<8)?&DDRD:((p<14)?&DDRB:&DDRC)
-#define pin2inp(p) (p<8)?&PIND:((p<14)?&PINB:&PINC)
-#define pin2bit(p) (p<8)?_BV(p):((p<14)?_BV(p-8):_BV(p-14))
+#define pin2out(p) (p<PB0)?&PORTD:((p<PC0)?&PORTB:&PORTC)
+#define pin2dir(p) (p<PB0)?&DDRD:((p<PC0)?&DDRB:&DDRC)
+#define pin2inp(p) (p<PB0)?&PIND:((p<PC0)?&PINB:&PINC)
+#define pin2bit(p) (p<PB0)?_BV(p):((p<PC0)?_BV(p-PB0):_BV(p-PC0))
+#define pin2int_chan(p) ((p==PD2) || (p==PD3))?(p-PD2):0xFF
+#define pin2anlog_chan(p) (p>PB5 && p<NUM_DIGITAL_PINS)?(p-A0):0xFF
 
 /*
 #define PD0    _BV(0)

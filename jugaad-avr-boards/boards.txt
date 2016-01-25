@@ -4,6 +4,31 @@
 # * https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5---3rd-party-Hardware-specification
 # * https://github.com/arduino/Arduino/wiki/Arduino-Hardware-Cores-migration-guide-from-1.0-to-1.6
 #
+#######################################
+#
+# Author: Abhijit Bose (salearj@hotmail.com)
+#
+# Copyright (c) 2016 Abhijit Bose.  All right reserved.
+#
+# This file is part of Jugaad Boards Framework (JBF) for A.R.C. Core.
+#
+# JBF is free software: you can redistribute it and / or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+#   JBF is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with JBF.
+# If not, see <https://www.gnu.org/licenses/lgpl-3.0.txt>.
+# You can also write to the Free Software Foundation, Inc.,
+# 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#
+#######################################
 
 menu.cpu=Processor
 
@@ -21,12 +46,12 @@ miniboard.bootloader.unlock_bits=0x3F
 miniboard.bootloader.lock_bits=0x0F
 
 miniboard.build.board=JUGAAD_AVR_BOARD
-miniboard.build.core=arduino_arc
+miniboard.build.core=ARC
 miniboard.build.variant=standard
 
-## Arduino Pro or Pro Mini (5V, 16 MHz) w/ ATmega328
+## Arduino Pro or Pro Mini 16 MHz w/ ATmega328P DIP
 ## -------------------------------------------------
-miniboard.menu.cpu.16MHzatmega328=ATmega328 (5V, 16 MHz)
+miniboard.menu.cpu.16MHzatmega328=ATmega328P 16MHz DIP
 
 miniboard.menu.cpu.16MHzatmega328.upload.maximum_size=30720
 miniboard.menu.cpu.16MHzatmega328.upload.maximum_data_size=2048
