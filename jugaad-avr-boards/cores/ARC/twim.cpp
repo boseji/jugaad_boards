@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <util/twi.h>
 
-#define SER_DEBUG
+//#define SER_DEBUG
 
 
 void TwimOn(uint8_t bitrate)
