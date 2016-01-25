@@ -48,7 +48,7 @@ uint8_t digitalWrite(uint8_t pin, uint8_t state)
     return SUCCESS;
 }
 
-uint8_t digialToggle(uint8_t pin)
+uint8_t digitalToggle(uint8_t pin)
 {
     volatile uint8_t *p;
     if(pin > NUM_DIGITAL_PINS)
@@ -60,7 +60,7 @@ uint8_t digialToggle(uint8_t pin)
     return SUCCESS;
 }
 
-uint8_t digialRead(uint8_t pin)
+uint8_t digitalRead(uint8_t pin)
 {
     volatile uint8_t *p;
     if(pin > NUM_DIGITAL_PINS)

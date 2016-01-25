@@ -18,32 +18,27 @@
 #define OUTPUT 1
 #define INPUT 2
 #define INPUT_PULLUP 3
+uint8_t pinMode(uint8_t pin, uint8_t mode);
 
 /* GPIO Pin Levels */
 #define HIGH 1
 #define ON 1
 #define LOW 0
 #define OFF 0
+uint8_t digitalWrite(uint8_t pin, uint8_t state);
+uint8_t digitalToggle(uint8_t pin);
+uint8_t digitalRead(uint8_t pin);
 
 /* Shift In-Out Direction Flags */
 #define MSBFIRST 1
 #define LSBFIRST 1
 
-/* ADC Reference Defines */
-#define DEFAULT 1
-#define INTERNAL 3
-#define EXTERNAL 0
 
 /* Error Definitions */
 #define PARAMETER_ERROR 0xFE
 #define GENERAL_ERROR 0xFF
 #define UNSUPPORTED_ERROR 0xFF
 #define SUCCESS 0
-
-uint8_t pinMode(uint8_t pin, uint8_t mode);
-uint8_t digitalWrite(uint8_t pin, uint8_t state);
-uint8_t digialToggle(uint8_t pin);
-uint8_t digialRead(uint8_t pin);
 
 #define delay _delay_ms
 #define delayMicroseconds _delay_us
@@ -58,13 +53,17 @@ uint8_t shiftOut(uint8_t data_pin, uint8_t clock_pin, uint8_t bitOrder, uint8_t 
 uint8_t shiftIn(uint8_t data_pin, uint8_t clock_pin, uint8_t bitOrder);
 uint8_t shiftOutIn(uint8_t in_pin, uint8_t out_pin, uint8_t clock_pin, uint8_t bitOrder, uint8_t val);
 
+/* ADC Reference Defines */
+#define DEFAULT 1
+#define INTERNAL 3
+#define EXTERNAL 0
 uint8_t analogReference(uint8_t val);
 uint16_t analogRead(uint8_t apin);
 void analogOff();
 //uint16_t analogSample(uint16_t *buffer, uint8_t buf_len, uint8_t Cycles);
 //uin8_t analogComp(uint8_t pin, uint16_t delay);
 
-#define SER_RX_BUFFER_MAX 64
+#define SER_RX_BUFFER_MAX 65
 uint8_t SerOn(uint16_t datarate);
 uint8_t SerOnEx(uint16_t datarate, uint8_t datarate2x, uint8_t config);
 uint8_t SerIsReady(void);
@@ -84,6 +83,61 @@ uint16_t SerReadBytesEx(uint8_t *buffer,uint16_t size, uint16_t timeoutms);
 uint16_t SerReadBytesUtil(uint8_t termination, uint8_t *buffer,uint16_t size);
 uint16_t SerReadBytesUtilEx(uint8_t termination, uint8_t *buffer,uint16_t size, uint16_t timeoutms);
 uint8_t SerOff();
+
+
+#define SPIM_MODE_0 (0)
+#define SPIM_MODE_1 (_BV(CPHA))
+#define SPIM_MODE_2 (_BV(CPOL))
+#define SPIM_MODE_3 (_BV(CPOL)|_BV(CPHA))
+#define SPIM_MODE_MASK (_BV(CPOL)|_BV(CPHA))
+#define SPIM_MODE_STANDARD SPIM_MODE_0
+#define SPIM_MODE_DEFAULT SPIM_MODE_0
+
+#define SPIM_SPEED_DIV2 (_BV(SPI2X)<<4)
+#define SPIM_SPEED_DIV4 (0)
+#define SPIM_SPEED_DIV8 ((_BV(SPI2X)<<4)|1)
+#define SPIM_SPEED_DIV16 (1)
+#define SPIM_SPEED_DIV32 ((_BV(SPI2X)<<4)|2)
+#define SPIM_SPEED_DIV64 (2)
+#define SPIM_SPEED_DIV128 (3)
+#define SPIM_SPEED_MASK2X ((_BV(SPI2X)<<4))
+#define SPIM_SPEED_MASKLOW (3)
+#define SPIM_SPEED_DEFAULT SPIM_SPEED_DIV16
+
+uint8_t SpimOn(uint8_t spimode, uint8_t datarate, uint8_t bitOrder);
+uint8_t SpimSend(uint8_t data);
+uint8_t SpimSends(uint8_t *dataOut, uint16_t size);
+uint8_t SpimReads(uint8_t *dataIn, uint8_t dummy_dataOut, uint16_t size);
+uint8_t SpimTrans(uint8_t *dataIn, uint8_t *dataOut, uint16_t size);
+uint8_t SpimOff(void);
+
+#define TWIM_BITRATE_10K  1
+#define TWIM_BITRATE_100K 10
+#define TWIM_BITRATE_400K 40
+#define TWIM_BITRATE_DEFAULT TWIM_BITRATE_100K
+#define TWIM_READ 1
+#define TWIM_WRITE 0
+#define TWIM_EVENT_IDLE    0
+#define TWIM_EVENT_START   1
+#define TWIM_EVENT_RESTART 2
+#define TWIM_EVENT_ADDRESS_W 3
+#define TWIM_EVENT_ADDRESS_R 4
+#define TWIM_EVENT_ACK     5
+#define TWIM_EVENT_NACK    6
+#define TWIM_EVENT_LASTDATA 7
+#define TWIM_EVENT_STOP    8
+#define TWIM_EVENT_LOSTARB 9
+
+uint8_t TwimOn(uint8_t bitrate);
+uint8_t TwimStart(void);
+uint8_t TwimAddress(uint8_t address_rw);
+uint8_t TwimWrite(uint8_t data);
+uint8_t TwimIsAck(void);
+uint8_t TwimWrites(uint8_t *data, uint16_t size);
+uint8_t TwimRead(uint8_t data);
+uint8_t TwimReads(uint8_t *data, uint16_t size);
+void TwimStop(void);
+void TwimOff(void);
 
 extern void setup();
 
