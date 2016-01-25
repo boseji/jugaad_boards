@@ -117,26 +117,18 @@ uint8_t SpimOff(void);
 #define TWIM_BITRATE_DEFAULT TWIM_BITRATE_100K
 #define TWIM_READ 1
 #define TWIM_WRITE 0
-#define TWIM_EVENT_IDLE    0
-#define TWIM_EVENT_START   1
-#define TWIM_EVENT_RESTART 2
-#define TWIM_EVENT_ADDRESS_W 3
-#define TWIM_EVENT_ADDRESS_R 4
-#define TWIM_EVENT_ACK     5
-#define TWIM_EVENT_NACK    6
-#define TWIM_EVENT_LASTDATA 7
-#define TWIM_EVENT_STOP    8
-#define TWIM_EVENT_LOSTARB 9
+#define TWIM_STATUS_SUCCESS    0
+#define TWIM_STATUS_START_FAILED 1
+#define TWIM_STATUS_ADDRESS_FAILED 2
+#define TWIM_STATUS_DATASEND_FAILED 3
+#define TWIM_STATUS_DATAREAD_ACK_FAILED 4
+#define TWIM_STATUS_DATAREAD_NACK_FAILED 5
 
-uint8_t TwimOn(uint8_t bitrate);
-uint8_t TwimStart(void);
-uint8_t TwimAddress(uint8_t address_rw);
-uint8_t TwimWrite(uint8_t data);
-uint8_t TwimIsAck(void);
-uint8_t TwimWrites(uint8_t *data, uint16_t size);
-uint8_t TwimRead(uint8_t data);
-uint8_t TwimReads(uint8_t *data, uint16_t size);
-void TwimStop(void);
+void TwimOn(uint8_t bitrate);
+uint8_t TwimWriteEx(uint8_t address, uint8_t *buf, uint8_t len, uint8_t sendstop);
+uint8_t TwimReadEx(uint8_t address, uint8_t *buf, uint8_t len, uint8_t sendstop);
+#define TwimWrite(ADDR,BUF,LEN) TwimReadEx(ADDR,BUF,LEN,1)
+#define TwimRead(ADDR,BUF,LEN) TwimReadEx(ADDR,BUF,LEN,1)
 void TwimOff(void);
 
 extern void setup();
