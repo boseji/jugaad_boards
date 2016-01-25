@@ -2,7 +2,9 @@
 
 This is a collection of boards created to work in the arduino IDE. This framework includes the necessary files as well as libraries and tools to make sure the loading of the programs easy.
 
-There is one important principle that was followed in the development and which makes this some what beginner friendly is = No touching the hardware while loading the code. It should just load automatically.
+There is one important principle that was followed in the development and which makes this some what 
+beginner friendly is = *No touching the hardware while loading the code*. 
+It should just load *automagically*.
 
 Another key focus area was to constain the actual `code space` used. Meaning the reduction of the amount of memory required to store the compiled code. And still provide the most comprehensive set of core functions.
 
@@ -19,7 +21,7 @@ folder new structure looks like
 
 `<Arduino IDE Dir>\hardware\juggad_boards-master\jugaad-avr-boards`
 
-Here `<Arduino IDE Dir>` is the location of the installation / Extraction of the Arduino IDE.
+Here `<Arduino IDE Dir>` is the location of the installation / Extraction of arduino IDE.
 
 
 
