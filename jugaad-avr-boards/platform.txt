@@ -1,16 +1,39 @@
 # Boseji's Jugaad-boards Contribution Platform Configuration
 #
 # For more information see:
-# * https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5---3rd-party-Hardware-specification
-# * https://github.com/arduino/Arduino/wiki/Arduino-Hardware-Cores-migration-guide-from-1.0-to-1.6
+# https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5---3rd-party-Hardware-specification
+# https://github.com/arduino/Arduino/wiki/Arduino-Hardware-Cores-migration-guide-from-1.0-to-1.6
 #
+# Author: Abhijit Bose (salearj@hotmail.com)
+#
+# Copyright (c) 2016 Abhijit Bose.  All right reserved.
+#
+# This file is part of Jugaad Boards Framework (JBF) for A.R.C. Core.
+#
+# JBF is free software: you can redistribute it and / or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+#   JBF is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with JBF.
+# If not, see <https://www.gnu.org/licenses/lgpl-3.0.txt>.
+# You can also write to the Free Software Foundation, Inc.,
+# 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#
+
 name=Boseji's Jugaad AVR Boards
 version=1.0.0
 
 
 
 # AVR compile variables
-# --------------------- 
+# ---------------------
 
 compiler.warning_flags=-w
 compiler.warning_flags.none=-w

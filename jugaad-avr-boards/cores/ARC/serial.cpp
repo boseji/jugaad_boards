@@ -1,3 +1,40 @@
+/**
+ * @file serial.cpp
+ *
+ * @brief Serial port related functions and ISR handler
+ *
+ *
+ * @version 1.0.0 First Version Release - 25th Jan 2016
+ *
+ * @author Abhijit Bose (salearj@hotmail.com)
+ *
+ * @copy Copyright (c) 2016 Abhijit Bose.  All right reserved.
+ *
+ * @license
+ *  This file is part of Jugaad Boards Framework (JBF) for A.R.C. Core.
+ *
+ *  JBF is free software: you can redistribute it and / or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *   JBF is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with JBF.
+ *  If not, see <https://www.gnu.org/licenses/lgpl-3.0.txt>.
+ *  You can also write to the Free Software Foundation, Inc.,
+ *  51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * @note Arduino - Copyright owned by Arduino LLC and we are not associated
+ *  with them in any what so ever manner. JBF is an independently developed entity
+ *  and hence Arduino LLC or Associated collaborators cannot claim ownership
+ *  of this work under any legal on permissible context.
+ *
+ */
 #include <Arduino.h>
 #include "cq.h"
 
@@ -166,7 +203,7 @@ uint8_t SerOn(uint16_t datarate)
     default:
       return PARAMETER_ERROR;
   }
-  
+
 #if defined(__AVR_ATmega8__)
   /* Set frame format: 8 data, 2 stop bit */
   UCSR0C = _BV(URSEL)|_BV(USBS0)|(3<<UCSZ00);
@@ -177,12 +214,12 @@ uint8_t SerOn(uint16_t datarate)
   /* Enable receiver and transmitter */
   if(cqueue_init((cqueue_t *)&g_Ser_Rx_Queue, g_Ser_Rx_Buffer, SER_RX_BUFFER_MAX) == CQ_STATUS_SUCCESS)
   {
-    UCSR0B = _BV(RXEN0)|_BV(TXEN0)|_BV(RXCIE0);  
+    UCSR0B = _BV(RXEN0)|_BV(TXEN0)|_BV(RXCIE0);
     g_Ser_En = SER_EN_MASK|SER_ISR_MASK; /* Serial Enabled */
   }
   else /* In case we fail to make the Buffer Available */
   {
-    UCSR0B = _BV(RXEN0)|_BV(TXEN0);  
+    UCSR0B = _BV(RXEN0)|_BV(TXEN0);
     g_Ser_En = SER_EN_MASK; /* Serial Enabled */
   }
   return SUCCESS;
@@ -206,12 +243,12 @@ uint8_t SerOnEx(uint16_t datarate, uint8_t datarate2x, uint8_t config)
   /* Enable receiver and transmitter */
   if(cqueue_init((cqueue_t *)&g_Ser_Rx_Queue, g_Ser_Rx_Buffer, SER_RX_BUFFER_MAX) == CQ_STATUS_SUCCESS)
   {
-    UCSR0B = _BV(RXEN0)|_BV(TXEN0)|_BV(RXCIE0);  
+    UCSR0B = _BV(RXEN0)|_BV(TXEN0)|_BV(RXCIE0);
     g_Ser_En = SER_EN_MASK|SER_ISR_MASK; /* Serial Enabled */
   }
   else /* In case we fail to make the Buffer Available */
   {
-    UCSR0B = _BV(RXEN0)|_BV(TXEN0);  
+    UCSR0B = _BV(RXEN0)|_BV(TXEN0);
     g_Ser_En = SER_EN_MASK; /* Serial Enabled */
   }
   return SUCCESS;
@@ -236,7 +273,7 @@ void SerPuts(const char * data)
   {
     char * tmp;
     // Perform length computation
-    tmp = (char *) data;    
+    tmp = (char *) data;
     SER_CLR_STATUS();// Clear the Interrupt Status
     while (*tmp != '\0')// Iterate till the null is found
     {
@@ -248,13 +285,13 @@ void SerPuts(const char * data)
 
 void SerPutsz(const char * data, uint16_t begin, uint16_t size)
 {
-  if ((data != 0) && (g_Ser_En != 0) && 
+  if ((data != 0) && (g_Ser_En != 0) &&
     (begin < size) && (size != 0))  // Check buffer size and data pointer
   {
     char * tmp;
     uint16_t i = 0;
     // Perform length computation
-    tmp = (char *) (data + begin);    
+    tmp = (char *) (data + begin);
     SER_CLR_STATUS();// Clear the Interrupt Status
     while (i < size)// Iterate till the null is found
     {
@@ -300,7 +337,7 @@ void SerOutb(uint8_t data)
     {
       SER_TXBYTE(dig[clc]);
     }
-  }    
+  }
 }
 void SerOutbh(uint8_t data)
 {
@@ -335,7 +372,7 @@ void SerOuti(uint16_t data)
       dig[4-i] = '0' + clc%10;
     }
     for(i = 0; i < 5; i++)
-    {  
+    {
       SER_TXBYTE(dig[i]);
     }
   }
@@ -344,7 +381,7 @@ void SerOuti(uint16_t data)
 void SerOutih(uint16_t data)
 {
   if(g_Ser_En != 0)
-  {  
+  {
     uint16_t clc;
     uint8_t dig[6],i;
     for(i = 2,clc = data; i < 6; i++,clc >>= 4)
@@ -440,13 +477,13 @@ uint16_t SerReadBytesEx(uint8_t *buffer,uint16_t size, uint16_t timeoutms)
         c = SerRead(); // Read the byte
         buffer[i] = c; // Write to Buffer
         ++i; // Increment the Counter
-        t = 0; // Reset Timeout 
+        t = 0; // Reset Timeout
       }
       else /* Increment Timeout */
       {
         if(++t>=timeoutms)
           break;
-      }      
+      }
     }
     return i;
   }
@@ -498,13 +535,13 @@ uint16_t SerReadBytesUtilEx(uint8_t termination, uint8_t *buffer,uint16_t size, 
           break;
         buffer[i] = c; // Write to Buffer
         ++i; // Increment the Counter
-        t = 0; // Reset Timeout 
+        t = 0; // Reset Timeout
       }
       else /* Increment Timeout */
       {
         if(++t>=timeoutms)
           break;
-      }      
+      }
     }
     return i;
   }
