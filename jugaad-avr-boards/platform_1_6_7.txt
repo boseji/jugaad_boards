@@ -41,7 +41,7 @@ compiler.warning_flags.default=
 compiler.warning_flags.more=-Wall
 compiler.warning_flags.all=-Wall -Wextra
 
-compiler.path={runtime.ide.path}/hardware/tools/avr-gcc/4.8.1-arduino5/bin/
+compiler.path={runtime.tools.avr-gcc.path}/bin/
 
 compiler.c.cmd=avr-gcc
 compiler.c.flags=-c -g -Os {compiler.warning_flags} -std=gnu11 -ffunction-sections -fdata-sections -MMD
@@ -80,7 +80,7 @@ compiler.ar.extra_flags=
 compiler.objcopy.eep.extra_flags=
 compiler.elf2hex.extra_flags=
 
-archive_file_path={build.path}/core.a
+
 
 # AVR compile patterns
 # --------------------
@@ -125,7 +125,7 @@ recipe.preproc.macros="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {
 
 # AVR Uploader/Programmers tools
 # ------------------------------
-tools.avrdude.path={runtime.ide.path}/hardware/tools/avrdude/6.0.1-arduino5/bin/
+tools.avrdude.path={runtime.tools.avrdude.path}
 tools.avrdude.cmd.path={path}/bin/avrdude
 #tools.avrdude.config.path={runtime.platform.path}/avrdude.conf
 tools.avrdude.config.path={path}/etc/avrdude.conf
