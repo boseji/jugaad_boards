@@ -1,4 +1,4 @@
-#Jugaad Boards
+# Jugaad Boards
 
 This is a collection of boards created to work in the arduino IDE. This framework includes the necessary files as well as libraries and tools to make sure the loading of the programs easy.
 
@@ -27,10 +27,13 @@ Here `<Arduino IDE Dir>` is the location of the installation / Extraction of ard
 
 ## License
 
-This software is released under the GNU Lesser General Public License Version 3.
+This software is released under the GNU General Public License v2.0 only.
+All the files in this repository conform to GNU General Public License v2.0 unless otherwise specified.
+
+`SPDX-License-Identifier: GPL-2.0-only`
+
+[**SPDX Identifier: GPL-2.0-only**](https://spdx.org/licenses/GPL-2.0-only.html)
 
 The licesne text included in the file `LICENSE.txt` of this repository.
-see <https://www.gnu.org/licenses/lgpl-3.0.txt>.
-
-![Image of LGPL3 Logo](https://raw.githubusercontent.com/boseji/jugaad_boards/master/lgplv3-logo.png)
+see <https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt>.
 
