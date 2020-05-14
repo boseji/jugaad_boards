@@ -1,4 +1,4 @@
-Copyright (C) 2020 Abhijit Bose
+Copyright (C) 2006-2020 Abhijit Bose <https://boseji.com>. All right reserved.
 
 This program is free software; you can redistribute it and/or modify it under 
 the terms of the GNU General Public License as published by the 
