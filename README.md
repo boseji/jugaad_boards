@@ -13,17 +13,9 @@ In order to be able to to care to these main 2 requirements the design was made 
 
 ## How to Add to Arduino IDE:
 
-Download the Repository from the [Link](https://github.com/boseji/jugaad_boards/archive/master.zip)
+Copy and paste the following URL into the File > Preferences > "Additional Boards Manager" textbox.
 
-Then Extract it `as-Is` under `<Arduino IDE Dir>\hardware` such that the 
-
-folder new structure looks like
-
-`<Arduino IDE Dir>\hardware\juggad_boards-master\jugaad-avr-boards`
-
-Here `<Arduino IDE Dir>` is the location of the installation / Extraction of arduino IDE.
-
-
+`https://raw.githubusercontent.com/boseji/jugaad_boards/master/bm/package_boseji_jugaad_boards_index.json`
 
 ## License
 
