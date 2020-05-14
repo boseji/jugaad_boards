@@ -2,11 +2,11 @@
   "packages": [
     {
       "name": "Boseji's Jugaad Boards",
-      "maintainer": "boseji",
-      "websiteURL": "http://m8051.blogspot.in/",
+      "maintainer": "Boseji",
+      "websiteURL": "http://www.boseji.com/",
       "email": "salearj@hotmail.com",
       "help": {
-        "online": "http://m8051.blogspot.in/"
+        "online": "https://github.com/boseji/jugaad_boards/tree/master/boards/ARC"
       },
       "platforms": [
         {
@@ -16,40 +16,10 @@
           "category": "All",
           "url": "https://github.com/boseji/jugaad_boards/raw/master/bm/jugaad_avr_boards-1.0.0.tar.bz2",
           "archiveFileName": "jugaad_avr_boards-1.0.0.tar.bz2",
-          "checksum": "SHA-256:d7d3b9009a758f407c5a9365c6be1469af1e91c358440a20ca81dc07e4ca48cb",
-          "size": "1138406",
+          "checksum": "SHA-256:18d26d75388648bfb5430ad9cd7e4be61efbe41530c753ff790481edc444a80e",
+          "size": "20457",
           "help": {
-            "online": "http://m8051.blogspot.in/"
-          },
-          "boards": [
-            {
-              "name": "Mini Boards"
-            }
-          ],
-          "toolsDependencies": [
-            {
-              "packager": "arduino",
-              "name": "avr-gcc",
-              "version": "4.8.1-arduino5"
-            },
-            {
-              "packager": "arduino",
-              "name": "avrdude",
-              "version": "6.0.1-arduino5"
-            }
-          ]
-        },
-        {
-          "name": "Jugaad AVR Boards",
-          "architecture": "avr",
-          "version": "1.0.0",
-          "category": "All",
-          "url": "https://github.com/boseji/jugaad_boards/raw/master/bm/jugaad_avr_boards-1.0.1.tar.bz2",
-          "archiveFileName": "jugaad_avr_boards-1.0.1.tar.bz2",
-          "checksum": "SHA-256:d7d3b9009a758f407c5a9365c6be1469af1e91c358440a20ca81dc07e4ca48cb",
-          "size": "1138406",
-          "help": {
-            "online": "http://m8051.blogspot.in/"
+            "online": "https://github.com/boseji/jugaad_boards/tree/master/boards/ARC"
           },
           "boards": [
             {
