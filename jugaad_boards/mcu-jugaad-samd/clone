@@ -1,7 +1,7 @@
 #!/bin/bash
 ##################################################################################
 #
-# Juaad-Board's Repository Cloning Script
+# MCU-Juaad Board's Repository Cloning Script
 #
 ###############################################
 # Copyright (C) 2006-2020 Abhijit Bose <https://boseji.com>. All right reserved.
@@ -24,8 +24,8 @@
 #
 ##################################################################################
 echo
-echo "  Juaad-Board's Repository Cloning Script"
-echo "-------------------------------------------"
+echo "  MCU-Juaad Board's Repository Cloning Script"
+echo "-----------------------------------------------"
 echo
 # Variables
 USER="arduino"
@@ -36,7 +36,7 @@ REPO_DIR="samd"
 TAG=`curl -s https://api.github.com/repos/$USER/$REPO/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")'`
 
 echo
-echo "1.  Clonning into $REPO Latest Tag: $TAG ..."
+echo "  Clonning into $REPO Latest Tag: $TAG ..."
 echo
 
 # Create the build Directory
@@ -48,6 +48,20 @@ cd $BUILD_DIR
 
 # Perfrom the Actual Cloning
 git clone -b $TAG --depth 1 https://github.com/$USER/$REPO.git $REPO_DIR
+# Remove Git
+rm -rf $REPO_DIR/.git $REPO_DIR/variants 
+rm $REPO_DIR/*.* &>/dev/null
+rm $REPO_DIR/* &>/dev/null
+rm $REPO_DIR/.* &>/dev/null
+mv $REPO_DIR/bootloaders/zero $REPO_DIR/zero-boot
+rm -rf $REPO_DIR/bootloaders
+mkdir -p $REPO_DIR/bootloaders
+mv $REPO_DIR/zero-boot $REPO_DIR/bootloaders/zero
+# Remove Other Things
 
 # Restore
 cd ..
+
+echo
+echo "  Success !"
+echo

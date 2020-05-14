@@ -1,0 +1,72 @@
+#!/bin/bash
+##################################################################################
+#
+# MCU-Juaad Board's Repository Archive Script
+#
+###############################################
+# Copyright (C) 2006-2020 Abhijit Bose <https://boseji.com>. All right reserved.
+#
+# This program is free software; you can redistribute it and/or modify it under 
+# the terms of the GNU General Public License as published by the 
+# Free Software Foundation; version 2.
+#
+# This program is distributed in the hope that it will be useful, 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+# See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License 
+# along with this program; if not, write to the Free Software Foundation, Inc., 
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+#
+# SPDX-License-Identifier: GPL-2.0-only
+# https://spdx.org/licenses/GPL-2.0-only.html
+#
+##################################################################################
+echo
+echo "  MCU-Juaad Board's Repository Archive Script"
+echo "-----------------------------------------------"
+echo
+# Get Version
+VERSION="$(cat VERSION)"
+BUILD_DIR="build"
+REPO_DIR="samd"
+PATCH_DIR="patch_dir"
+PROJECT="mcu-jugaad-samd"
+
+echo "Building $VERSION"
+echo
+
+# Fill Directory
+/bin/cp -rT $PATCH_DIR $BUILD_DIR/$REPO_DIR
+
+# Create the File Name
+FILENAME="${PROJECT}-${VERSION}.tar.bz2"
+
+# Patch the Version in platform.txt
+cd $BUILD_DIR/$REPO_DIR
+sed -i "s/%%VERSION%%/${VERSION}/" platform.txt
+cd ../..
+
+# Create the Archive
+cd $BUILD_DIR
+if [[ -e "${FILENAME}" ]] ; then
+rm -rf $FILENAME
+fi
+tar -jcf $FILENAME samd
+cp $FILENAME ../../../bm/
+cd ..
+
+# Get Archive Details
+SHA="$(sha256sum ${BUILD_DIR}/${FILENAME} | awk '{ print $1 }')"
+SIZE="$(wc -c ${BUILD_DIR}/${FILENAME} | awk '{ print $1 }')"
+
+echo "FILE Name      = \"archiveFileName\": \"${FILENAME}\""
+echo "FILE Checksum  = \"checksum\": \"SHA-256:${SHA}\""
+echo "FILE Size bytes= \"size\": \"${SIZE}\""
+
+cat package_index.json.template |
+sed "s/%%VERSION%%/${VERSION}/" |
+sed "s/%%FILENAME%%/${FILENAME}/" |
+sed "s/%%CHECKSUM%%/${SHA}/" |
+sed "s/%%SIZE%%/${SIZE}/" > ${BUILD_DIR}/package_${PROJECT}_index.json
