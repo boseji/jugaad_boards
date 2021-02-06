@@ -15,6 +15,10 @@ In order to be able to to care to these main 2 requirements the design was made 
 
 Copy and paste the following URL into the File > Preferences > "Additional Boards Manager" textbox.
 
+`https://boseji.com/files/package_boseji_jugaad_boards_index.json`
+
+### Older URI
+
 `https://raw.githubusercontent.com/boseji/jugaad_boards/master/bm/package_boseji_jugaad_boards_index.json`
 
 ## License
