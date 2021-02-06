@@ -1,10 +1,10 @@
 {
   "packages": [
     {
-      "name": "Boseji's Jugaad Boards",
-      "maintainer": "Boseji",
+      "name": "boseji.com Jugaad AVR Boards",
+      "maintainer": "boseji.com",
       "websiteURL": "http://www.boseji.com/",
-      "email": "salearj@hotmail.com",
+      "email": "packages@boseji.com",
       "help": {
         "online": "https://github.com/boseji/jugaad_boards/tree/master/boards/ARC"
       },
@@ -43,8 +43,8 @@
       "tools": []
     },
     {
-      "name": "MCU-JUGAAD SAMD Boards",
-      "maintainer": "Boseji",
+      "name": "boseji.com MCU-JUGAAD SAMD Boards",
+      "maintainer": "boseji.com",
       "websiteURL": "http://www.boseji.com/",
       "email": "packages@boseji.com",
       "help": {
@@ -52,7 +52,7 @@
       },
       "platforms": [
         {
-          "name": "MCU-JUGAAD SAMD (32-bits ARM Cortex-M0+) Boards",
+          "name": "boseji.com MCU-JUGAAD SAMD21 Boards",
           "architecture": "samd",
           "version": "0.0.1-v1.8.6",
           "category": "Contributed",
@@ -99,7 +99,7 @@
           ]
         },
         {
-          "name": "MCU-JUGAAD SAMD (32-bits ARM Cortex-M0+) Boards",
+          "name": "boseji.com MCU-JUGAAD SAMD21 Boards",
           "architecture": "samd",
           "version": "0.0.2-v1.8.6",
           "category": "Contributed",
@@ -111,6 +111,52 @@
             {
               "name": "mcu-jugaad SAMD21G V1"
             }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "arm-none-eabi-gcc",
+              "version": "7-2017q4"
+            },
+            {
+              "packager": "arduino",
+              "name": "bossac",
+              "version": "1.7.0-arduino3"
+            },
+            {
+              "packager": "arduino",
+              "name": "openocd",
+              "version": "0.10.0-arduino7"
+            },
+            {
+              "packager": "arduino",
+              "name": "CMSIS",
+              "version": "4.5.0"
+            },
+            {
+              "packager": "arduino",
+              "name": "CMSIS-Atmel",
+              "version": "1.2.0"
+            },
+            {
+              "packager": "arduino",
+              "name": "arduinoOTA",
+              "version": "1.2.1"
+            }
+          ]
+        },
+        {
+          "name": "boseji.com MCU-JUGAAD SAMD21 Boards",
+          "architecture": "samd",
+          "version": "1.0.0-Core-v1.8.11",
+          "category": "Contributed",
+          "url": "https://github.com/boseji/jugaad_boards/raw/master/bm/boseji_com_MCU-JUGAAD_SAMD21_Boards_1.0.0-Core-v1.8.11.tar.bz2",
+          "archiveFileName": "boseji_com_MCU-JUGAAD_SAMD21_Boards_1.0.0-Core-v1.8.11.tar.bz2",
+          "checksum": "SHA-256:fdd7503af2ef9a5fb51420d39b1ca48266e69d2ed9e3cf219c45a38d071d1486",
+          "size": "3099572",
+          "boards": [
+            { "name": "mcu-jugaad SAMD21G V1" },
+            { "name": "Anuj v0.4 SAM21G"}
           ],
           "toolsDependencies": [
             {
